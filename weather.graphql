@@ -1,0 +1,42 @@
+# Weather API using US govt weather services
+type WXPoint {
+  gridId: String!
+  gridX: Int!
+  gridY: Int!
+}
+
+type Forecast {
+  number: Int!
+  name: String!
+  startTime: DateTime!
+  endTime: DateTime!
+  temperature: Float!
+  temperatureUnit: String!
+  temperatureTrend: JSON
+  shortForecast: String!
+  detailedForecast: String!
+  icon: String!
+}
+
+type Query {
+  getWXPoint(lat: Float!, lng: Float!): WXPoint!
+    @rest(
+      endpoint: "https://api.weather.gov/points/$lat;,$lng"
+      resultroot: "properties"
+    )
+  getPointForecast(office: String!, gridX: Int!, gridY: Int!): [Forecast!]!
+    @rest(
+      endpoint: "https://api.weather.gov/gridpoints/$office/$gridX;,$gridY/forecast"
+      resultroot: "properties.periods[]"
+    )
+  getForecast(lat: Float!, lng: Float!): [Forecast!]!
+    @sequence(
+      steps: [
+        { query: "getWXPoint" }
+        {
+          query: "getPointForecast"
+          arguments: [{ name: "office", field: "gridId" }]
+        }
+      ]
+    )
+}

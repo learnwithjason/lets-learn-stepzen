@@ -1,0 +1,4 @@
+## replace "sample.graphql" with your own schema files
+schema @sdl(files: ["weather.graphql", "location.graphql"]) {
+  query: Query
+}

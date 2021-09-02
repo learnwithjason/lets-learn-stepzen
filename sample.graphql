@@ -1,0 +1,45 @@
+# ## Scalars
+# type User {
+#   id: ID!
+#   fullName: String
+#   lastLogin: DateTime
+#   loginCount: Int
+#   rating: Float
+#   notes: JSON
+#   active: Boolean
+#   salt: Secret
+#   renewDate: Date
+# }
+# ## Queries/Mutations
+# type Query {
+#   getUserRest(id: ID!): User
+#     @rest(
+#       method: GET
+#       endpoint: ""
+#       headers: [{ name: "", value: "" }]
+#       resultroot: ""
+#       setters: [{ field: "", path: "" }]
+#       configuration: ""
+#     )
+#   getUserGraphql(id: ID!): User
+#     @graphql(endpoint: "", prefix: { value: "", includeRootOperations: true })
+#   getUserDb(id: ID!): User
+#     @dbquery(type: "", table: "", query: "", configuration: "")
+# }
+
+# ## interfaces without concrete types will be auto-mocked
+# interface User {
+#   id: ID!
+#   fullName: String
+#   lastLogin: DateTime
+#   loginCount: Int
+#   rating: Float
+#   notes: JSON
+#   active: Boolean
+#   salt: Secret
+#   renewDate: Date
+# }
+
+# type Query {
+#   getUser(id: ID): User
+# }

@@ -1,0 +1,21 @@
+configurationset:
+  - configuration:
+      name: hereapi
+      apikey: <your_here_api_key>
+
+ruleset:
+  - query: |
+      query GetForecast($q: String!) {
+          locate(q: $q) {
+              title
+              forecast {
+                shortForecast
+                temperature
+                temperatureUnit
+                name
+              }
+          }
+      }
+    rules:
+      - predicate: true
+        action: allow
